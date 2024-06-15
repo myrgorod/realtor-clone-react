@@ -11,8 +11,8 @@ import Header from "./components/Header";
 function App() {
   return (
     <div>
-      <Router >
-		<Header />
+      <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
