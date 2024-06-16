@@ -1,18 +1,12 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { StyledHeader } from "./Header.style";
 import { StyledWrapper } from "./Header.style";
 
 const Header = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  //   function pathMathRoute(route) {
-  //     console.log(location.pathname);
-  //     if (route === location.pathname) {
-  //       return true;
-  //     }
-  //   }
+
   return (
     <StyledWrapper>
       <StyledHeader>
