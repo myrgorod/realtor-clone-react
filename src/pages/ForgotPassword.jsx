@@ -5,11 +5,10 @@ import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
 
 const ForgotPassword = () => {
-
   const [email, setEmail] = useState("");
 
   function onChange(e) {
-    setEmail(e.target.value)
+    setEmail(e.target.value);
   }
   return (
     <StyledSignIn>
@@ -23,13 +22,6 @@ const ForgotPassword = () => {
         </div>
         <div className="sign-form">
           <form className="form-container">
-            {/* <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={onChange}
-              placeholder="Full name"
-            /> */}
             <input
               type="email"
               id="email"
@@ -37,29 +29,10 @@ const ForgotPassword = () => {
               onChange={onChange}
               placeholder="Email address"
             />
-            {/* <div className="password-container">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                onChange={onChange}
-                placeholder="Password"
-              />
-              {showPassword ? (
-                <IoMdEye
-                  className="icon"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                />
-              ) : (
-                <IoMdEyeOff
-                  className="icon"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                />
-              )}
-            </div> */}
+
             <div className="link-container">
               <p>
-              Don't have an account? &nbsp;{" "}
+                Don't have an account? &nbsp;{" "}
                 <Link to="/sign-up">Register</Link>
               </p>
               <p>
@@ -67,7 +40,7 @@ const ForgotPassword = () => {
               </p>
             </div>
             <button className="button-submit" type="submit">
-             Send reset password
+              Send reset password
             </button>
             <div className="line-text">
               <p>OR</p>

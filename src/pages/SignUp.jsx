@@ -4,6 +4,15 @@ import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,12 +22,38 @@ const SignUp = () => {
     password: "",
   });
   const { name, email, password } = formData;
+  const navigate = useNavigate();
   function onChange(e) {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
     console.log(e.target.value);
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const user = userCredential.user;
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+	  toast.success("Sign up was successful!")
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong with the registration!")
+    }
   }
   return (
     <StyledSignIn>
@@ -31,7 +66,7 @@ const SignUp = () => {
           />
         </div>
         <div className="sign-form">
-          <form className="form-container">
+          <form className="form-container" onSubmit={onSubmit}>
             <input
               type="text"
               id="name"
@@ -68,8 +103,7 @@ const SignUp = () => {
             </div>
             <div className="link-container">
               <p>
-              Have an account? &nbsp;{" "}
-                <Link to="/sign-in">Sign In</Link>
+                Have an account? &nbsp; <Link to="/sign-in">Sign In</Link>
               </p>
               <p>
                 <Link to="/forgot-password">Forgot password?</Link>
